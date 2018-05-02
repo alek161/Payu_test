@@ -1,0 +1,153 @@
+
+
+<!doctype html>
+<html lang="en" ng-app="GeekStore">
+<head>
+    <title> Geek Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <style>
+        .emptyMessage {
+            font-weight: bold;
+            color: red;
+            font-size: 1.2em;
+        }
+        li {
+            margin-bottom: 7px;
+            font-size: 1.2em;
+        }
+
+        li > button {
+
+            margin-left: 6px;
+        }
+        button > span {
+            color: green;
+        }
+		.std{
+		    padding:20px;
+		}
+		
+		@media print {
+		   .no-print{
+		        display:none;
+		    }
+		}        
+    </style>
+
+    <script src="javascripts/angular.min.js"></script>
+    <script src="javascripts/app.js"></script>
+
+
+</head>
+<body>
+<div class="container" ng-controller="ProductsController" >
+    <h1>Tienda de Figuras de Coleccion</h1>
+    <div class="no-print">
+    <div class="row">
+
+
+        <!-- To Buy List -->
+        <div class="col-md-8" >
+
+
+            <label for="user"> Producto: <select class="form-control" ng-model="product" id="user">
+                <option value="1"> Maestro Yoda </option>
+                <option value="2"> Sable laser de plastico </option>
+                <option value="3">Nave espacial Halcon Milenario </option>
+                <option value="4">Estrella de la muerte </option>
+                <option value="5">R2D2 en fichas de Lego </option>
+                <option value="6">Jar Jar Binks Gobernador </option>
+
+            </select>
+            </label>
+            <label for="quantity">Cantidad: <input class="form-control" ng-model="quantity" id="quantity"> </label>
+            <label for="value">Precio: <input class="form-control" ng-model="value" id="value"> </label>
+            <button class="btn btn-default" ng-click="addProduct()"><span class="glyphicon glyphicon-ok"></span> Create</button></br>
+            <h2>Productos Agregados</h2>
+            <ul >
+                <li ng-repeat=" product in products" >
+                    Name: {{product.name}} , Quantity: {{product.quantity}}  Value:  {{product.value | currency: product.moneda}}
+                    <button class="btn btn-default" ng-click="removeProduct(product.name)"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+                </li>
+            </ul>
+             <button class="btn btn-default" ng-click="buyProducts()"><span class="glyphicon glyphicon-download"></span> Comprar</button>
+
+        </div>
+
+        <!-- Already Bought List -->
+
+    </div>
+	</div>
+        <div class="row">
+                        <div class="col-md-6" >
+                <div class="row">
+                    <h2>Factura emitida </h2>
+                   <span  class="emptyMessage">Factura de la compra actualmente realizada</span>
+                	<div class="span5">
+		                <table class="table table-striped">
+		                    <thead>
+		                        <tr>
+		                            <th class="span5">Producto</th>
+		                            <th class="span2">Cantidad</th>
+		                            <th class="span2">Precio unitario</th>
+		                            <th class="span2">Precio total</th>
+		                            <th class="span2">iva 19%</th>
+		                            <th class="span2">Total</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <tr class="well" ng-repeat="product in products">
+		                            <td>{{product.name}}</td>
+		                            <td>{{product.quantity}}</td>
+		                            <td>{{product.priceCol}}</td>
+		                            <td>{{product.priceCol * product.quantity}}</td>
+		                            <td>{{((product.priceCol * product.quantity) * 0.19)}}</td>
+		                            <td>{{(product.quantity * product.priceCol) + ((product.priceCol * product.quantity) * 0.19)}}</td>
+		                        </tr>
+						        <tr>
+						          <th class="right" colspan="5">Monto Total: </th>
+						          <td colspan="1"><span class="resultado">{{sumCantidad()}}</span></td>
+						        </tr>		                        
+		                    </tbody>		                    
+		                  </table>                	
+                	</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"   >
+
+					    <hr>
+					    <a href="javascript:window.print()" class="btn primary large no-print">Imprimir factura</a>
+
+                    </div>
+
+
+                </div>
+                </div>
+
+            <div class="col-md-6" >
+            	<div class="no-print">
+                <div class="row">
+                    <h2>Resumen de compras realizadas </h2>
+                    <span  class="emptyMessage"> Detalle de todas las compras realizadas</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"   >
+
+
+
+                    </div>
+
+
+                </div>
+                </div>
+            </div>
+
+        </div>
+
+
+</div>
+
+</body>
+</html>
